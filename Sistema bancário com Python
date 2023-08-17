@@ -1,0 +1,59 @@
+from time import sleep
+menu = """
+==============
+[1] Depósitar
+[2] Sacar
+[3] Extrato
+[4] Sair
+=============
+"""
+saldo_em_conta = 0
+transacoes = []
+valores = []
+saque_diario = 0
+cont = 0
+
+while True:
+    escolha = input(menu)
+    if escolha == '1':
+        N = float(input('Digite o valor do depósito: '))
+        if N < 0:
+            print('Você não pode depositar um valor negativo!')
+        else: 
+            print('concluindo deposito...')
+            sleep(1)
+            print('Valor depósitado com sucesso!\n')
+            transacoes.append('Depósito')
+            valores.append(N)
+            saldo_em_conta = saldo_em_conta + N
+
+
+    elif escolha == '2':
+        if saque_diario == 3:
+            print('limite de saque diário atingido! ')
+        else:
+            V = float(input('Qual valor deseja sacar? '))
+            if V > 500:
+                print('Limite de saque é R$500,00')
+            elif saldo_em_conta < V or saldo_em_conta == 0:
+                print('Não será possível sacar o valor por falta de saldo')
+            else:
+                print('Saque Concluido com sucesso!\n')
+                transacoes.append('Saque')
+                valores.append(V)
+                saldo_em_conta = saldo_em_conta - V
+                saque_diario = saque_diario + 1
+
+    elif escolha == '3':
+       print('\n===== EXTRATO BANCÁRIO =====')
+       while cont < len(transacoes):
+           print(f'{transacoes[cont]} R${valores[cont]:.2f}')
+           cont = cont + 1
+       print('=======================')
+       print(f'Saldo atual de R${saldo_em_conta:.2f}')
+       print('=======================')
+
+    elif escolha == '4':
+        print('Saindo...')
+        sleep(1)
+        break
